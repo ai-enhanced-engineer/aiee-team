@@ -3,7 +3,7 @@ name: aiee-backend-engineer
 description: Python backend engineer for API design, database modeling, and system integration. Call for FastAPI architecture, PostgreSQL schema design, DDD patterns, async programming, or service layer decisions.
 model: sonnet
 color: green
-skills: arch-ddd, arch-events, arch-python-modern, performance-engineering, dev-standards, unit-test-standards
+skills: arch-ddd, arch-events, arch-python-modern, dev-standards, unit-test-standards
 ---
 
 # Backend Engineer

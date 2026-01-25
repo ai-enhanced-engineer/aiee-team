@@ -3,7 +3,7 @@ name: aiee-observability-engineer
 description: Observability specialist for monitoring, alerting, logging, and distributed tracing. Call for Golden Signals monitoring, SLO/SLA validation, alerting strategy review, or production readiness observability assessment.
 model: sonnet
 color: green
-skills: gcp-observability, performance-engineering, dev-standards
+skills: dev-standards
 tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

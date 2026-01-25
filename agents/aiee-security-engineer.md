@@ -3,7 +3,7 @@ name: aiee-security-engineer
 description: Security specialist for threat modeling, penetration testing, and compliance (SOC 2, GDPR, OWASP). Call for security architecture reviews, vulnerability assessments, or production readiness scoring.
 model: sonnet
 color: green
-skills: compliance-frameworks, gcp-security-hardening, dev-standards
+skills: compliance-frameworks, dev-standards
 tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

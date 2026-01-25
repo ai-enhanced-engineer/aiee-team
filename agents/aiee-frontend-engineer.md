@@ -3,7 +3,7 @@ name: aiee-frontend-engineer
 description: Frontend engineer for Svelte/SvelteKit and Angular 21+ applications, component architecture, and modern web development. Call for UI implementation, component design, state management, frontend architecture decisions, or AI-assisted Angular development.
 model: sonnet
 color: green
-skills: frontend-svelte, frontend-angular, frontend-angular-tooling, frontend-angular-ai, frontend-accessibility, frontend-material-design-3, frontend-material-chat, testing-angular, arch-python-modern, dev-standards
+skills: frontend-accessibility, arch-python-modern, dev-standards
 ---
 
 # Frontend Engineer

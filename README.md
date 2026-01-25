@@ -2,6 +2,38 @@
 
 AI Enhanced Engineer development team agents for Claude Code.
 
+## Free Tier Skills
+
+This plugin includes 11 skills in a two-tier model:
+
+### Complete Skills (Full Documentation)
+
+| Skill | Purpose |
+|-------|---------|
+| `dev-standards` | Development standards for code style, git conventions, and validation |
+| `unit-test-standards` | Test naming conventions, coverage requirements, and behavioral testing |
+
+### Lite Skills (Concepts Only)
+
+| Skill | Purpose |
+|-------|---------|
+| `arch-ddd` | Domain-Driven Design patterns and concepts |
+| `arch-events` | Event-driven architecture patterns |
+| `arch-decision-records` | Architecture Decision Records (ADRs) |
+| `arch-diagrams` | System visualization and diagrams |
+| `arch-mvp-roadmap` | MVP definition and phased delivery |
+| `arch-python-modern` | Modern Python 3.10+ development standards |
+| `compliance-frameworks` | SOC 2, GDPR compliance concepts |
+| `frontend-accessibility` | WCAG accessibility concepts |
+| `infra-terraform` | Infrastructure as Code concepts |
+
+### Premium Upgrades Available
+
+Full documentation with reference materials and examples available for:
+- All lite skills (upgrade to complete versions)
+- GCP Pack: CI/CD, Cloud Run, Cloud SQL, FinOps, Observability, Security
+- Performance Pack: Profiling, load testing, optimization
+
 ## Installation
 
 ### Via Plugin System (Recommended)

@@ -3,7 +3,7 @@ name: aiee-data-engineer
 description: Data engineer specializing in PostgreSQL/MySQL schema design, migration management, RLS security, and query optimization. Call for database architecture, migration strategy, or multi-tenant isolation design.
 model: sonnet
 color: green
-skills: gcp-cloudsql-infrastructure, arch-ddd, dev-standards
+skills: arch-ddd, dev-standards
 ---
 
 # Data Engineer

@@ -3,7 +3,7 @@ name: aiee-sre-engineer
 description: Site Reliability Engineer for operational readiness, runbooks, disaster recovery, incident response, and on-call procedures. Call for runbook validation, DR testing, backup strategy review, or production readiness operational assessment.
 model: sonnet
 color: green
-skills: gcp-observability, dev-standards
+skills: dev-standards
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
 ---
 
