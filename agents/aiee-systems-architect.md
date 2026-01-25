@@ -35,9 +35,9 @@ Full-stack systems architect specializing in service design, API contracts, and 
 ## NOT For
 
 - Detailed implementation (use domain specialists)
-- Infrastructure deployment (use gcp-devops-engineer)
-- Database schema design (use database-engineer)
-- Code review (use backend-engineer or frontend-engineer)
+- Infrastructure deployment (use aiee-devops-engineer)
+- Database schema design (out of scope)
+- Code review (use aiee-backend-engineer or aiee-frontend-engineer)
 
 ## Architecture Review Methodology
 

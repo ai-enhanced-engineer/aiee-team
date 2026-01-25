@@ -2,9 +2,9 @@
 
 AI Enhanced Engineer development team agents for Claude Code.
 
-## Free Tier Skills
+## Skills
 
-This plugin includes 11 skills in a two-tier model:
+This plugin includes 11 skills:
 
 ### Complete Skills (Full Documentation)
 
@@ -26,13 +26,6 @@ This plugin includes 11 skills in a two-tier model:
 | `compliance-frameworks` | SOC 2, GDPR compliance concepts |
 | `frontend-accessibility` | WCAG accessibility concepts |
 | `infra-terraform` | Infrastructure as Code concepts |
-
-### Premium Upgrades Available
-
-Full documentation with reference materials and examples available for:
-- All lite skills (upgrade to complete versions)
-- GCP Pack: CI/CD, Cloud Run, Cloud SQL, FinOps, Observability, Security
-- Performance Pack: Profiling, load testing, optimization
 
 ## Installation
 
@@ -64,12 +57,9 @@ Full documentation with reference materials and examples available for:
 | Agent | Role |
 |-------|------|
 | `aiee-backend-engineer` | Python backend engineer for API design, database modeling, and system integration |
-| `aiee-data-engineer` | Data engineer for PostgreSQL/MySQL schema design, migrations, and query optimization |
 | `aiee-devops-engineer` | DevOps engineer for CI/CD pipelines, IaC, and container orchestration |
 | `aiee-frontend-engineer` | Frontend engineer for Svelte/SvelteKit and Angular applications |
-| `aiee-observability-engineer` | Observability specialist for monitoring, alerting, and distributed tracing |
 | `aiee-security-engineer` | Security specialist for threat modeling and compliance (SOC 2, GDPR, OWASP) |
-| `aiee-sre-engineer` | Site Reliability Engineer for runbooks, disaster recovery, and incident response |
 | `aiee-systems-architect` | Full-stack systems architect for architecture reviews and service design |
 
 ## Usage

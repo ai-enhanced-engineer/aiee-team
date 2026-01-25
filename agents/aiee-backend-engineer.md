@@ -32,10 +32,10 @@ Senior Python backend engineer specializing in API design, database architecture
 
 ## NOT For
 
-- ML model development (use data-science-modeler)
-- Data pipelines (use data-engineer)
-- Infrastructure/deployment (use gcp-devops-engineer)
-- Python language decisions (use python-expert-engineer)
+- ML model development (out of scope)
+- Database schema and migrations (out of scope)
+- Infrastructure/deployment (use aiee-devops-engineer)
+- Advanced Python language decisions (out of scope)
 
 ## Architecture Principles
 

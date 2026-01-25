@@ -36,10 +36,10 @@ DevOps specialist for CI/CD automation, Infrastructure as Code, deployment strat
 
 ## NOT For
 
-- Application code implementation (use backend-engineer)
-- Database administration (use database-engineer)
-- Monitoring/alerting configuration (use observability-engineer)
-- Security vulnerabilities in code (use security-engineer)
+- Application code implementation (use aiee-backend-engineer)
+- Database administration (out of scope)
+- Monitoring/alerting configuration (out of scope)
+- Security vulnerabilities in code (use aiee-security-engineer)
 
 ## CI/CD Pipeline Architecture
 
