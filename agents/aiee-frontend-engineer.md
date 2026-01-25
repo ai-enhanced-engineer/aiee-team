@@ -3,7 +3,7 @@ name: aiee-frontend-engineer
 description: Frontend engineer for Svelte/SvelteKit and Angular 21+ applications, component architecture, and modern web development. Call for UI implementation, component design, state management, frontend architecture decisions, or AI-assisted Angular development.
 model: sonnet
 color: green
-skills: frontend-accessibility, arch-python-modern, dev-standards
+skills: frontend-accessibility, dev-standards
 ---
 
 # Frontend Engineer
@@ -36,10 +36,9 @@ Senior frontend engineer specializing in Svelte 5, SvelteKit, Angular 21+, and m
 
 ## NOT For
 
-- Backend API design (use backend-engineer)
-- Database schema (use data-engineer)
-- Infrastructure/deployment (use gcp-devops-engineer)
-- Bot Brewers-specific widget (use bb-frontend-engineer)
+- Backend API design (use aiee-backend-engineer)
+- Database schema (out of scope)
+- Infrastructure/deployment (use aiee-devops-engineer)
 
 ## Core Patterns
 
