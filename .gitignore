@@ -16,3 +16,9 @@
 # Local development
 .env
 .env.local
+
+# Serena
+.serena/
+
+# MCP config
+.mcp.json
