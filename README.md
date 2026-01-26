@@ -1,10 +1,113 @@
-# AIEE Team
+<p align="center">
+  <img src="assets/images/cover.jpeg" alt="AIEE Team - Domain specialists for production workflows" />
+</p>
 
-AI Enhanced Engineer development team agents for Claude Code.
+<p align="center">
+  <a href="https://github.com/ai-enhanced-engineer/aiee-team/releases"><img src="https://img.shields.io/github/v/release/ai-enhanced-engineer/aiee-team" alt="Version" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" /></a>
+  <a href="https://github.com/ai-enhanced-engineer/aiee-team/actions"><img src="https://img.shields.io/github/actions/workflow/status/ai-enhanced-engineer/aiee-team/release.yml?branch=main" alt="Build Status" /></a>
+</p>
 
-## Skills
+The official [AI-Enhanced Engineer](https://aiee.io) team agents for Claude Code | [Subscribe](https://aienhancedengineer.substack.com/)
 
-This plugin includes 11 skills:
+Multi-agent orchestration with domain specialists for production software development workflows.
+
+---
+
+## Table of Contents
+
+- [Why This Exists](#why-this-exists)
+- [🚀 Quick Start](#-quick-start)
+- [👥 Team Members](#-team-members)
+- [🛠️ Skills](#%EF%B8%8F-skills)
+- [📂 Directory Structure](#-directory-structure)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
+
+---
+
+## Why This Exists
+
+You ask Claude to build an API. It writes 500 lines of FastAPI in 30 seconds. No tests. No migration rollback. No SQL injection protection.
+
+The problem isn't that Claude can't code. It's that production software requires **domain expertise**:
+
+- A backend engineer knows to add database indexes for common queries
+- A security engineer validates JWT signatures before protected routes
+- A DevOps engineer versions Terraform state and locks deployments
+
+This plugin gives you specialist agents with that knowledge built in.
+
+**What you get:**
+
+- **Domain specialists** - Backend engineer designs your schema. Security engineer audits for vulnerabilities.
+- **Encoded patterns** - "Always use RLS for multi-tenant databases", "Test error codes, not just happy paths"
+- **Orchestrated workflows** - Architecture review before implementation. Security audit before deployment.
+
+---
+
+## 🚀 Quick Start
+
+### Via Plugin Marketplace (Recommended)
+
+1. Add the AIEE Team marketplace to Claude Code:
+   ```shell
+   /plugin marketplace add ai-enhanced-engineer/aiee-team
+   ```
+
+2. Install the plugin:
+   ```shell
+   /plugin install aiee-team@aiee-team
+   ```
+
+3. Verify installation:
+   ```shell
+   /agents
+   ```
+   You should see AIEE agents listed.
+
+### Via Local Development
+
+For contributors or local testing:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ai-enhanced-engineer/aiee-team.git ~/projects/aiee-team
+   ```
+
+2. Start Claude Code with the plugin loaded:
+   ```bash
+   claude --plugin-dir ~/projects/aiee-team
+   ```
+
+### Usage
+
+Claude automatically delegates to specialist agents based on task context. You can also explicitly request an agent:
+
+```
+Use the aiee-backend-engineer agent to design the API for user authentication
+```
+
+View all available agents with `/agents`.
+
+---
+
+## 👥 Team Members
+
+| Agent | Role |
+|-------|------|
+| `aiee-backend-engineer` | Python backend engineer for API design, database modeling, and system integration |
+| `aiee-devops-engineer` | DevOps engineer for CI/CD pipelines, IaC, and container orchestration |
+| `aiee-frontend-engineer` | Frontend engineer for Svelte/SvelteKit and Angular 21+ applications |
+| `aiee-python-expert-engineer` | Modern Python expert for architecture decisions, async patterns, and performance optimization |
+| `aiee-security-engineer` | Security specialist for threat modeling and compliance (SOC 2, GDPR, OWASP) |
+| `aiee-systems-architect` | Full-stack systems architect for architecture reviews and service design |
+
+---
+
+## 🛠️ Skills
+
+This plugin includes **11 skills** organized by access tier:
 
 ### Complete Skills (Full Documentation)
 
@@ -27,74 +130,54 @@ This plugin includes 11 skills:
 | `frontend-accessibility` | WCAG accessibility concepts |
 | `infra-terraform` | Infrastructure as Code concepts |
 
-## Installation
+---
 
-### Via Plugin System (Recommended)
-
-1. Clone this repository:
-   ```bash
-   git clone <repository-url> ~/.claude/plugins/aiee-team
-   ```
-
-2. Restart Claude Code to discover the plugin.
-
-### Via Setup Script (Development)
-
-1. Clone this repository to your preferred location:
-   ```bash
-   git clone <repository-url> ~/projects/aiee-team
-   ```
-
-2. Run the setup script:
-   ```bash
-   ./scripts/setup.sh
-   ```
-
-3. Restart Claude Code.
-
-## Team Members
-
-| Agent | Role |
-|-------|------|
-| `aiee-backend-engineer` | Python backend engineer for API design, database modeling, and system integration |
-| `aiee-devops-engineer` | DevOps engineer for CI/CD pipelines, IaC, and container orchestration |
-| `aiee-frontend-engineer` | Frontend engineer for Svelte/SvelteKit and Angular applications |
-| `aiee-security-engineer` | Security specialist for threat modeling and compliance (SOC 2, GDPR, OWASP) |
-| `aiee-systems-architect` | Full-stack systems architect for architecture reviews and service design |
-
-## Usage
-
-Invoke agents via the Task tool:
-
-```
-Task(subagent_type="aiee-backend-engineer", prompt="Design the API for user authentication")
-```
-
-Or reference them in your orchestration workflows.
-
-## Directory Structure
+## 📂 Directory Structure
 
 ```
 aiee-team/
 ├── .claude-plugin/
-│   └── plugin.json       # Plugin metadata
+│   ├── plugin.json       # Plugin metadata
+│   └── marketplace.json  # Marketplace distribution
 ├── agents/               # Agent definitions
-├── commands/             # Team-specific slash commands (future)
-├── skills/               # Team-specific skills (future)
-├── workflows/            # Team-specific workflows (future)
+├── assets/
+│   └── images/           # Cover image and visuals
+├── commands/             # Team-specific slash commands
+├── skills/               # Team-specific skills
+├── workflows/            # Team-specific workflows
 ├── scripts/
-│   └── setup.sh          # Symlink installer
+│   └── setup.sh          # Local development helper
 └── README.md
 ```
 
-## Contributing
+---
 
-To add a new agent:
+## 🤝 Contributing
+
+We welcome contributions that improve the team's capabilities:
+
+**To add a new agent:**
 
 1. Create `agents/<agent-name>.md` following the existing format
 2. Update this README's Team Members table
 3. Submit a pull request
 
-## License
+**To add a new skill:**
 
-MIT
+1. Create `skills/<skill-name>.md` following the skill format
+2. Update this README's Skills table
+3. Submit a pull request
+
+---
+
+## 📜 License
+
+MIT - See [LICENSE](LICENSE) file for details.
+
+---
+
+🚀 **Ready to supercharge your development workflow?** Clone the plugin and start delegating to specialist agents today.
+
+*Domain expertise on demand. For developers building real systems.*
+
+📬 [Subscribe](https://aienhancedengineer.substack.com/) for practical guides on AI-enhanced engineering.

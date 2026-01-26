@@ -1,0 +1,17 @@
+{
+  "name": "aiee-team",
+  "owner": {
+    "name": "AI Enhanced Engineer",
+    "email": "leo@aiee.io"
+  },
+  "metadata": {
+    "description": "Multi-agent orchestration with domain specialists for production software development"
+  },
+  "plugins": [
+    {
+      "name": "aiee-team",
+      "source": ".",
+      "description": "AI Enhanced Engineer development team agents and skills"
+    }
+  ]
+}
