@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.0.1...v1.1.0) (2026-01-26)
+
+
+### Features
+
+* add plugin marketplace distribution and branding ([#3](https://github.com/ai-enhanced-engineer/aiee-team/issues/3)) ([eae4321](https://github.com/ai-enhanced-engineer/aiee-team/commit/eae4321b44573c5333dc2f67d20a53d65e84362f))
+
 ## [1.0.1](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.0.0...v1.0.1) (2026-01-25)
 
 
