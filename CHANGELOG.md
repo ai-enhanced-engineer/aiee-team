@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.1.0...v1.2.0) (2026-01-31)
+
+
+### Features
+
+* Add aiee-data-engineer agent and gcp-cloudsql-infrastructure skill ([#5](https://github.com/ai-enhanced-engineer/aiee-team/issues/5)) ([c2cad79](https://github.com/ai-enhanced-engineer/aiee-team/commit/c2cad7987aba7d277f08f9e08302dc6bb172ac66))
+
 # [1.1.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.0.1...v1.1.0) (2026-01-26)
 
 
