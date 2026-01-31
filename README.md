@@ -1,5 +1,7 @@
+<h1 align="center">The AI Enhanced Engineer's Team</h1>
+
 <p align="center">
-  <img src="assets/images/cover.jpeg" alt="AIEE Team - Domain specialists for production workflows" />
+  <img src="assets/images/cover.jpeg" alt="AIEE Team - Domain specialists for production workflows" width="450" />
 </p>
 
 <p align="center">
@@ -8,7 +10,9 @@
   <a href="https://github.com/ai-enhanced-engineer/aiee-team/actions"><img src="https://img.shields.io/github/actions/workflow/status/ai-enhanced-engineer/aiee-team/release.yml?branch=main" alt="Build Status" /></a>
 </p>
 
-The official [AI-Enhanced Engineer](https://aiee.io) team agents for Claude Code | [Subscribe](https://aienhancedengineer.substack.com/)
+<p align="center">
+  🌐 <a href="https://aiee.io">Website</a> | 📧 <a href="https://aienhancedengineer.substack.com/">Subscribe</a>
+</p>
 
 Multi-agent orchestration with domain specialists for production software development workflows.
 
