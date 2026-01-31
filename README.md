@@ -101,6 +101,7 @@ View all available agents with `/agents`.
 | Agent | Role |
 |-------|------|
 | `aiee-backend-engineer` | Python backend engineer for API design, database modeling, and system integration |
+| `aiee-data-engineer` | Data engineer for PostgreSQL/MySQL schema design, migration management, and multi-tenant isolation |
 | `aiee-devops-engineer` | DevOps engineer for CI/CD pipelines, IaC, and container orchestration |
 | `aiee-frontend-engineer` | Frontend engineer for Svelte/SvelteKit and Angular 21+ applications |
 | `aiee-python-expert-engineer` | Modern Python expert for architecture decisions, async patterns, and performance optimization |
@@ -111,7 +112,7 @@ View all available agents with `/agents`.
 
 ## 🛠️ Skills
 
-This plugin includes **11 skills** organized by access tier:
+This plugin includes **12 skills** organized by access tier:
 
 ### Complete Skills (Full Documentation)
 
@@ -132,6 +133,7 @@ This plugin includes **11 skills** organized by access tier:
 | `arch-python-modern` | Modern Python 3.10+ development standards |
 | `compliance-frameworks` | SOC 2, GDPR compliance concepts |
 | `frontend-accessibility` | WCAG accessibility concepts |
+| `gcp-cloudsql-infrastructure` | Cloud SQL PostgreSQL infrastructure concepts |
 | `infra-terraform` | Infrastructure as Code concepts |
 
 ---
