@@ -1,3 +1,10 @@
+# Unreleased
+
+### Features
+
+* Add `/aiee-backend` command for quality-gated backend implementation workflow with parallel reviews
+* Add `/aiee-frontend` command for quality-gated frontend implementation workflow (Svelte 5 + Angular 21)
+
 # [1.2.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.1.0...v1.2.0) (2026-01-31)
 
 

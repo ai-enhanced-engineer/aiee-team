@@ -22,6 +22,7 @@ Multi-agent orchestration with domain specialists for production software develo
 
 - [Why This Exists](#why-this-exists)
 - [🚀 Quick Start](#-quick-start)
+- [🎯 Commands](#-commands)
 - [👥 Team Members](#-team-members)
 - [🛠️ Skills](#%EF%B8%8F-skills)
 - [📂 Directory Structure](#-directory-structure)
@@ -93,6 +94,61 @@ Use the aiee-backend-engineer agent to design the API for user authentication
 ```
 
 View all available agents with `/agents`.
+
+---
+
+## 🎯 Commands
+
+| Command | Purpose |
+|---------|---------|
+| `aiee-backend` | Backend implementation with 2-phase gated review (quality + security → tests) |
+| `aiee-frontend` | Frontend implementation with 2-phase gated review (architecture + security → tests) |
+
+### Backend Development Workflow
+
+The `/aiee-backend` command orchestrates a quality-gated implementation cycle:
+
+```bash
+# Bug fix
+/aiee-backend fix: Resolve N+1 query in user profile endpoint
+
+# New feature
+/aiee-backend feat: Add pagination to user list API
+
+# Refactoring
+/aiee-backend refactor: Extract email validation to service layer
+```
+
+**Workflow phases**:
+1. Implementation by `aiee-backend-engineer`
+2. Parallel reviews (code quality, Python patterns, security)
+3. Test enforcement gate (80% coverage, proper naming)
+4. Consolidation and iteration (max 3 cycles)
+
+See `commands/aiee-backend.md` for detailed workflow documentation.
+
+### Frontend Development Workflow
+
+The `/aiee-frontend` command orchestrates a quality-gated implementation cycle for Svelte 5 and Angular 21+ projects:
+
+```bash
+# Bug fix
+/aiee-frontend fix: Resolve accessibility issue in navigation menu
+
+# New feature
+/aiee-frontend feat: Add dark mode toggle component
+
+# Refactoring
+/aiee-frontend refactor: Extract form validation to composable
+```
+
+**Workflow phases**:
+1. Implementation by `aiee-frontend-engineer`
+2. Parallel reviews (frontend architecture + accessibility, security)
+3. Test enforcement gate (80% coverage, E2E tests)
+4. Consolidation and iteration (max 3 cycles)
+
+See `commands/aiee-frontend.md` for detailed workflow documentation.
 
 ---
 

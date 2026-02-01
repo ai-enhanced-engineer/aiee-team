@@ -4,5 +4,17 @@
   "description": "AI Enhanced Engineer development team agents",
   "author": {
     "name": "AIEE Team"
-  }
+  },
+  "commands": [
+    {
+      "name": "aiee-backend",
+      "description": "Backend implementation with 2-phase gated review (quality + security → tests)",
+      "path": "commands/aiee-backend.md"
+    },
+    {
+      "name": "aiee-frontend",
+      "description": "Frontend implementation with 2-phase gated review (architecture + security → tests)",
+      "path": "commands/aiee-frontend.md"
+    }
+  ]
 }
