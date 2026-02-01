@@ -97,6 +97,79 @@ View all available agents with `/agents`.
 
 ---
 
+## 🧪 Development & Testing
+
+### Testing Locally
+
+To test the plugin during development:
+
+1. **Load the plugin from your local directory:**
+   ```bash
+   cd /path/to/aiee-team
+   claude --plugin-dir ./
+   ```
+
+2. **Verify plugin loaded:**
+   ```bash
+   /plugins
+   # Should show: aiee-team (local)
+   ```
+
+3. **Test commands are available:**
+   ```bash
+   /commands
+   # Should show: aiee-backend, aiee-frontend
+   ```
+
+4. **Test a command:**
+   ```bash
+   /aiee-backend fix: Test command loading
+   ```
+
+5. **Verify agents are accessible:**
+   ```bash
+   /agents
+   # Should list: aiee-backend-engineer, aiee-frontend-engineer, etc.
+   ```
+
+### Before Committing
+
+Always run validation checks:
+
+```bash
+# Validate JSON files
+cat .claude-plugin/plugin.json | jq empty
+cat .claude-plugin/marketplace.json | jq empty
+
+# Check for required files
+test -f .claude-plugin/plugin.json && echo "✅ Manifest exists"
+test -f .claude-plugin/marketplace.json && echo "✅ Marketplace config exists"
+test -f commands/aiee-backend.md && echo "✅ Backend command exists"
+test -f commands/aiee-frontend.md && echo "✅ Frontend command exists"
+
+# Verify agent references use aiee-* prefix
+grep -r "@agent-" commands/ | grep -v "aiee-" | grep -v "test-enforcement-reviewer" | grep -v "python-code-quality-auditor" && echo "⚠️ Non-aiee agents found" || echo "✅ Agent references correct"
+```
+
+### Plugin Installation Scopes
+
+When installing the plugin, choose the appropriate scope:
+
+| Scope | Use Case | Location | Sharing |
+|-------|----------|----------|---------|
+| `--scope project` | **Team development** (recommended) | Committed to git | Everyone on team uses same version |
+| `--scope user` | Personal use across projects | `~/.claude/plugins/` | Only you |
+| `--scope local` | Project-specific testing | `.claude/` (gitignored) | Development only |
+
+**Recommended for teams:** `--scope project`
+
+```bash
+# Install for team
+/plugin install aiee-team@aiee-team --scope project
+```
+
+---
+
 ## 🎯 Commands
 
 | Command | Purpose |

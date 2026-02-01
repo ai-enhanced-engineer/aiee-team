@@ -1,6 +1,13 @@
 ---
 description: AIEE frontend services - implementation + 2-phase gated review
 argument-hint: <fix:|feat:|refactor:> [task description]
+tags: [frontend, quality-gate, svelte, angular, accessibility, security, web-components]
+requires-plugins: []
+min-claude-code-version: 1.0.33
+examples:
+  - "/aiee-frontend fix: Resolve accessibility issue in navigation menu"
+  - "/aiee-frontend feat: Add dark mode toggle component"
+  - "/aiee-frontend refactor: Extract form validation to composable"
 ---
 
 # AIEE Frontend Cycle
@@ -55,6 +62,19 @@ Wait for completion before proceeding to Phase 2.
 ### Phase 2: Architecture, Accessibility & Security Review (Parallel)
 
 Launch 2 reviewers **in parallel** (single message, multiple Task tool calls):
+
+**How parallel execution works:**
+When you summon multiple agents in one orchestrator message, Claude Code runs them concurrently:
+
+```
+Orchestrator invokes both agents simultaneously:
+├─ Task 1: aiee-frontend-engineer (starts immediately)
+└─ Task 2: aiee-security-engineer (starts immediately)
+
+Both complete independently, then orchestrator proceeds to Phase 3
+```
+
+**Critical:** Use multiple Task tool calls in a SINGLE message. Do NOT send separate messages or wait between agents.
 
 1. **@agent-aiee-frontend-engineer** (Frontend Architecture, Patterns & Accessibility)
    - Focus: Framework patterns, component architecture, state management, accessibility

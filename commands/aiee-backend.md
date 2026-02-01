@@ -1,6 +1,13 @@
 ---
 description: AIEE backend services - implementation + 2-phase gated review
 argument-hint: <fix:|feat:|refactor:> [task description]
+tags: [backend, quality-gate, python, security, fastapi, django, sqlalchemy]
+requires-plugins: []
+min-claude-code-version: 1.0.33
+examples:
+  - "/aiee-backend fix: Resolve N+1 query in user profile endpoint"
+  - "/aiee-backend feat: Add pagination to user list API"
+  - "/aiee-backend refactor: Extract email validation to service layer"
 ---
 
 # AIEE Team Backend Cycle
@@ -41,6 +48,20 @@ Wait for completion before proceeding to Phase 2.
 ### Phase 2: Code Quality, Patterns & Security Review (Parallel)
 
 Launch 3 reviewers **in parallel** (single message, multiple Task tool calls):
+
+**How parallel execution works:**
+When you summon multiple agents in one orchestrator message, Claude Code runs them concurrently:
+
+```
+Orchestrator invokes all 3 agents simultaneously:
+├─ Task 1: python-code-quality-auditor (starts immediately)
+├─ Task 2: aiee-python-expert-engineer (starts immediately)
+└─ Task 3: aiee-security-engineer (starts immediately)
+
+All three complete independently, then orchestrator proceeds to Phase 3
+```
+
+**Critical:** Use multiple Task tool calls in a SINGLE message. Do NOT send separate messages or wait between agents.
 
 1. **@agent-python-code-quality-auditor**
    - Focus: Safety net - blocks hallucinated packages, tautological tests, code-level security
