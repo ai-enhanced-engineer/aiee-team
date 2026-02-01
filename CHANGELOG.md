@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.2.0...v1.3.0) (2026-02-01)
+
+
+### Features
+
+*  Add /aiee-backend and /aiee-frontend commands for quality-gated workflows ([#6](https://github.com/ai-enhanced-engineer/aiee-team/issues/6)) ([22e8e6b](https://github.com/ai-enhanced-engineer/aiee-team/commit/22e8e6bc63b5a3881992f010415fe04d37c67d8e))
+
 # Unreleased
 
 ### Features
