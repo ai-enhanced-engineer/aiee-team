@@ -22,6 +22,7 @@ Multi-agent orchestration with domain specialists for production software develo
 
 - [Why This Exists](#why-this-exists)
 - [🚀 Quick Start](#-quick-start)
+- [🎯 Commands](#-commands)
 - [👥 Team Members](#-team-members)
 - [🛠️ Skills](#%EF%B8%8F-skills)
 - [📂 Directory Structure](#-directory-structure)
@@ -93,6 +94,134 @@ Use the aiee-backend-engineer agent to design the API for user authentication
 ```
 
 View all available agents with `/agents`.
+
+---
+
+## 🧪 Development & Testing
+
+### Testing Locally
+
+To test the plugin during development:
+
+1. **Load the plugin from your local directory:**
+   ```bash
+   cd /path/to/aiee-team
+   claude --plugin-dir ./
+   ```
+
+2. **Verify plugin loaded:**
+   ```bash
+   /plugins
+   # Should show: aiee-team (local)
+   ```
+
+3. **Test commands are available:**
+   ```bash
+   /commands
+   # Should show: aiee-backend, aiee-frontend
+   ```
+
+4. **Test a command:**
+   ```bash
+   /aiee-backend fix: Test command loading
+   ```
+
+5. **Verify agents are accessible:**
+   ```bash
+   /agents
+   # Should list: aiee-backend-engineer, aiee-frontend-engineer, etc.
+   ```
+
+### Before Committing
+
+Always run validation checks:
+
+```bash
+# Validate JSON files
+cat .claude-plugin/plugin.json | jq empty
+cat .claude-plugin/marketplace.json | jq empty
+
+# Check for required files
+test -f .claude-plugin/plugin.json && echo "✅ Manifest exists"
+test -f .claude-plugin/marketplace.json && echo "✅ Marketplace config exists"
+test -f commands/aiee-backend.md && echo "✅ Backend command exists"
+test -f commands/aiee-frontend.md && echo "✅ Frontend command exists"
+
+# Verify agent references use aiee-* prefix
+grep -r "@agent-" commands/ | grep -v "aiee-" | grep -v "test-enforcement-reviewer" | grep -v "python-code-quality-auditor" && echo "⚠️ Non-aiee agents found" || echo "✅ Agent references correct"
+```
+
+### Plugin Installation Scopes
+
+When installing the plugin, choose the appropriate scope:
+
+| Scope | Use Case | Location | Sharing |
+|-------|----------|----------|---------|
+| `--scope project` | **Team development** (recommended) | Committed to git | Everyone on team uses same version |
+| `--scope user` | Personal use across projects | `~/.claude/plugins/` | Only you |
+| `--scope local` | Project-specific testing | `.claude/` (gitignored) | Development only |
+
+**Recommended for teams:** `--scope project`
+
+```bash
+# Install for team
+/plugin install aiee-team@aiee-team --scope project
+```
+
+---
+
+## 🎯 Commands
+
+| Command | Purpose |
+|---------|---------|
+| `aiee-backend` | Backend implementation with 2-phase gated review (quality + security → tests) |
+| `aiee-frontend` | Frontend implementation with 2-phase gated review (architecture + security → tests) |
+
+### Backend Development Workflow
+
+The `/aiee-backend` command orchestrates a quality-gated implementation cycle:
+
+```bash
+# Bug fix
+/aiee-backend fix: Resolve N+1 query in user profile endpoint
+
+# New feature
+/aiee-backend feat: Add pagination to user list API
+
+# Refactoring
+/aiee-backend refactor: Extract email validation to service layer
+```
+
+**Workflow phases**:
+1. Implementation by `aiee-backend-engineer`
+2. Parallel reviews (code quality, Python patterns, security)
+3. Test enforcement gate (80% coverage, proper naming)
+4. Consolidation and iteration (max 3 cycles)
+
+See `commands/aiee-backend.md` for detailed workflow documentation.
+
+### Frontend Development Workflow
+
+The `/aiee-frontend` command orchestrates a quality-gated implementation cycle for Svelte 5 and Angular 21+ projects:
+
+```bash
+# Bug fix
+/aiee-frontend fix: Resolve accessibility issue in navigation menu
+
+# New feature
+/aiee-frontend feat: Add dark mode toggle component
+
+# Refactoring
+/aiee-frontend refactor: Extract form validation to composable
+```
+
+**Workflow phases**:
+1. Implementation by `aiee-frontend-engineer`
+2. Parallel reviews (frontend architecture + accessibility, security)
+3. Test enforcement gate (80% coverage, E2E tests)
+4. Consolidation and iteration (max 3 cycles)
+
+See `commands/aiee-frontend.md` for detailed workflow documentation.
 
 ---
 

@@ -1,17 +1,28 @@
 {
-  "name": "aiee-team",
-  "owner": {
-    "name": "AI Enhanced Engineer",
-    "email": "leo@aiee.io"
-  },
-  "metadata": {
-    "description": "Multi-agent orchestration with domain specialists for production software development"
-  },
-  "plugins": [
+  "entries": [
     {
       "name": "aiee-team",
-      "source": ".",
-      "description": "AI Enhanced Engineer development team agents and skills"
+      "source": "./",
+      "description": "AI Enhanced Engineer development team agents and workflows",
+      "version": "1.2.0",
+      "author": {
+        "name": "AIEE Team"
+      },
+      "tags": [
+        "development",
+        "quality-gates",
+        "backend",
+        "frontend",
+        "python",
+        "fastapi",
+        "django",
+        "svelte",
+        "angular",
+        "security",
+        "testing"
+      ],
+      "repository": "https://github.com/ai-enhanced-engineer/aiee-team",
+      "license": "MIT"
     }
   ]
 }
