@@ -1,6 +1,7 @@
 ---
 name: testing-angular
-description: Angular 21+ testing patterns with Vitest, signal component testing, and Playwright E2E. Use for writing unit tests, integration tests, or E2E tests for Angular applications. Trigger terms: Angular testing, Vitest, Jasmine, Karma, Playwright E2E, signal testing.
+description: Angular 21+ testing patterns with Vitest, signal component testing, and Playwright E2E. Use for writing unit tests, integration tests, or E2E tests for Angular applications.
+trigger-terms: Angular testing, Vitest, Jasmine, Karma, Playwright E2E, signal testing
 ---
 
 # Angular Testing Patterns
