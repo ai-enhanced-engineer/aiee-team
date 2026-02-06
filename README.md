@@ -202,7 +202,7 @@ See `commands/aiee-backend.md` for detailed workflow documentation.
 
 ### Frontend Development Workflow
 
-The `/aiee-frontend` command orchestrates a quality-gated implementation cycle for Svelte 5 and Angular 21+ projects:
+The `/aiee-frontend` command orchestrates a quality-gated implementation cycle for Angular 21+ projects:
 
 ```bash
 # Bug fix
@@ -232,7 +232,7 @@ See `commands/aiee-frontend.md` for detailed workflow documentation.
 | `aiee-backend-engineer` | Python backend engineer for API design, database modeling, and system integration |
 | `aiee-data-engineer` | Data engineer for PostgreSQL/MySQL schema design, migration management, and multi-tenant isolation |
 | `aiee-devops-engineer` | DevOps engineer for CI/CD pipelines, IaC, and container orchestration |
-| `aiee-frontend-engineer` | Frontend engineer for Svelte/SvelteKit and Angular 21+ applications |
+| `aiee-frontend-engineer` | Frontend engineer for Angular 21+ applications and Web Components |
 | `aiee-python-expert-engineer` | Modern Python expert for architecture decisions, async patterns, and performance optimization |
 | `aiee-security-engineer` | Security specialist for threat modeling and compliance (SOC 2, GDPR, OWASP) |
 | `aiee-systems-architect` | Full-stack systems architect for architecture reviews and service design |

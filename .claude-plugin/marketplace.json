@@ -16,7 +16,6 @@
         "python",
         "fastapi",
         "django",
-        "svelte",
         "angular",
         "security",
         "testing"
