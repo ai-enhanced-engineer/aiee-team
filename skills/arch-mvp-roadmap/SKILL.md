@@ -57,4 +57,28 @@ Order features by:
 | Phase 2 | [Should-haves] | [Measurable outcomes] | MVP complete |
 | Phase 3 | [Could-haves] | [Measurable outcomes] | Phase 2 complete |
 
+## Extensible Algorithm Design
+
+Design algorithms for evolution using stable interfaces. MVP delivers value immediately while building ground truth for future ML phases.
+
+**Evolution path:**
+1. **MVP:** Deterministic algorithm (keyword matching, rule-based)
+2. **Phase 2:** Statistical approach (TF-IDF, collaborative filtering)
+3. **Phase 3:** ML/embeddings (neural networks, transformers)
+4. **Phase 4:** LLM-powered (if needed)
+
+**Interface pattern:**
+```python
+class Categorizer(Protocol):
+    def categorize(self, text: str) -> tuple[str, float]:
+        """Returns (category, confidence_score)"""
+        ...
+```
+
+**Key principles:**
+- MVP uses zero ML infrastructure (no model serving, no embeddings DB)
+- Interface stays stable across phases (same input/output signature)
+- Each phase is independently measurable (track accuracy improvement)
+- Switch implementations via dependency injection, not rewrite
+
 See `reference.md` for detailed patterns and `examples.md` for sample roadmaps.

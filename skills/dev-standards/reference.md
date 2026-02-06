@@ -131,6 +131,67 @@ def test__order_allocation__happy_path():
 | `pytest` | Testing |
 | `pathlib` | Path handling (over os.path) |
 
+### Timing and Measurement
+
+Use the correct timing function for the use case:
+
+| Function | Use Case | Example |
+|----------|----------|---------|
+| `time.perf_counter()` | Elapsed time, performance measurement | Request latency, function timing |
+| `time.time()` | Wall-clock time, timestamps | Log timestamps, datetime comparisons |
+| `time.monotonic()` | Long-running timeouts, uptime | Connection timeouts, retry backoff |
+
+#### Why `perf_counter()` for Elapsed Time
+
+```python
+# ❌ WRONG - can produce negative elapsed times due to NTP adjustments
+start = time.time()
+do_work()
+elapsed = time.time() - start  # Can be negative!
+
+# ✅ CORRECT - monotonic clock, always forward, high precision
+from time import perf_counter
+
+start = perf_counter()
+await do_work()
+elapsed_ms = (perf_counter() - start) * 1000
+logger.info("Operation complete", elapsed_ms=round(elapsed_ms, 2))
+```
+
+**Why `perf_counter()` is correct:**
+- Monotonic clock (always moves forward, immune to NTP)
+- Higher precision (nanosecond resolution on most platforms)
+- Designed specifically for performance measurements
+
+#### Finally Block for Consistent Measurement
+
+Calculate timing once in `finally` block to avoid duplication:
+
+```python
+# ✅ Calculate once in finally block (single source of truth)
+start_time = perf_counter()
+error_occurred = None
+result = None
+
+try:
+    result = await operation()
+except Exception as e:
+    error_occurred = str(e)
+finally:
+    duration_ms = round((perf_counter() - start_time) * 1000, 2)
+
+# Log based on captured state
+if error_occurred:
+    logger.error("Failed", duration_ms=duration_ms, error=error_occurred)
+else:
+    logger.info("Success", duration_ms=duration_ms)
+```
+
+**Why `finally` block:**
+- Runs in all cases (success, exception, early return)
+- Single calculation point eliminates duplication
+- Captured state variables allow logging after timing is finalized
+
 ### Code Style
 
 - Python 3.10+ features
@@ -208,241 +269,3 @@ For removing >500 lines of code:
 | 1000-5000 lines | Parallel review (3-4 reviewers) |
 | >5000 lines | Architecture review + staged rollout |
 
----
-
-## Integration Tests for Session Lifecycle
-
-### When Integration Tests Are Required
-
-**CRITICAL**: Any code creating fresh DB sessions for database operations MUST have integration tests with real database.
-
-### Why Unit Tests Fail to Catch Session Issues
-
-Unit tests with mocked `db.commit()` don't catch:
-- **MissingGreenlet errors** from cross-session entity usage
-- **Greenlet context initialization** issues
-- **Lazy-loading relationship** failures
-- **RLS context** not being set correctly
-
-**Example of what unit tests miss:**
-
-```python
-# Unit test (PASSES but doesn't catch the bug)
-async def test__finalize_stream__saves_result(mock_db):
-    mock_db.commit = AsyncMock()  # Mocked commit doesn't spawn greenlets
-
-    await finalize_stream(mock_db, session, customer)
-
-    mock_db.commit.assert_called_once()  # ✅ Passes
-    # But doesn't catch that 'customer' is bound to wrong session!
-```
-
-```python
-# Integration test (FAILS - catches the bug)
-@pytest.mark.integration
-async def test__finalize_stream__with_real_db(real_db_factory):
-    async with real_db_factory() as db1:
-        customer = await create_test_customer(db1)
-        session = await create_test_session(db1)
-        await db1.commit()
-
-    # Fresh session (simulates finalization scenario)
-    async with real_db_factory() as db2:
-        # This raises MissingGreenlet in production but unit test missed it
-        await finalize_stream(db2, session, customer)  # ❌ MissingGreenlet!
-```
-
-### Integration Test Patterns
-
-#### Pattern 1: Cross-Session Entity Workflow
-
-Test that entities are properly reloaded across sessions:
-
-```python
-@pytest.mark.integration
-async def test__cross_session_workflow__reloads_entities(real_db_factory):
-    """Regression test: Ensure entities are reloaded in fresh sessions."""
-
-    # Session 1: Create entities
-    async with real_db_factory() as db1:
-        customer = await customer_repo.create(db1, CustomerEntity(...))
-        session = await session_repo.create(db1, SessionEntity(...))
-        await db1.commit()
-
-    # Session 2: Use entities (must reload)
-    async with real_db_factory() as db2:
-        # MUST reload - can't reuse from db1
-        reloaded_session = await session_repo.get_by_id(db2, session.id)
-        reloaded_customer = await customer_repo.get_by_id(db2, customer.id)
-
-        # Test that commit works with properly reloaded entities
-        await chat_service.save_stream_result(
-            db2, reloaded_session, reloaded_customer, ...
-        )
-        await db2.commit()  # Should NOT raise MissingGreenlet
-```
-
-#### Pattern 2: RLS Context Verification
-
-Test that tenant context is correctly set on fresh sessions (applicable to multi-tenant apps with Row-Level Security):
-
-```python
-@pytest.mark.integration
-async def test__fresh_session__sets_rls_context(real_db_factory):
-    """Verify RLS context is set when creating fresh sessions."""
-    async with real_db_factory() as db:
-        tenant = await create_test_tenant(db)  # or create_test_customer
-        await db.commit()
-
-    # Fresh session for handling requests
-    async with real_db_factory() as fresh_db:
-        # Set tenant context (e.g., set_tenant_context for RLS)
-        await set_tenant_context(fresh_db, str(tenant.id))
-
-        # Verify context is active (query should succeed and return filtered results)
-        sessions = await session_repo.list_for_tenant(fresh_db, tenant.id)
-
-        # Should only return this tenant's data
-        assert all(s.tenant_id == tenant.id for s in sessions)
-```
-
-#### Pattern 3: Streaming Finalization
-
-Test the complete lifecycle of streaming endpoints (WebSocket, SSE, chunked HTTP responses):
-
-```python
-@pytest.mark.integration
-async def test__websocket_stream__persists_messages_after_streaming(
-    real_db_factory,
-    mock_stream_client  # Assumes test fixture defined in conftest.py
-):
-    """Full lifecycle: stream response + finalize with fresh session."""
-
-    # Setup: Create tenant and session in request session
-    async with real_db_factory() as request_db:
-        tenant = await create_test_tenant(request_db)
-        session = await create_test_session(request_db, tenant.id)
-        await request_db.commit()
-
-    # Stream response (no DB operations during streaming)
-    chunks = []
-    async for chunk in stream_response(session.id, "Hello"):
-        chunks.append(chunk)
-
-    # Finalize: Fresh session for persistence
-    async with real_db_factory() as finalize_db:
-        # Reload entities in fresh session (CRITICAL: prevents MissingGreenlet)
-        reloaded_session = await session_repo.get_by_id(finalize_db, session.id)
-        reloaded_tenant = await tenant_repo.get_by_id(finalize_db, tenant.id)
-
-        # Set tenant context (for multi-tenant apps with RLS)
-        await set_tenant_context(finalize_db, str(reloaded_tenant.id))
-
-        # Save accumulated response
-        accumulated_content = "".join(c["content"] for c in chunks)
-        await save_message(
-            finalize_db,
-            reloaded_session,
-            accumulated_content
-        )
-        await finalize_db.commit()  # Should succeed
-
-    # Verify: Messages persisted correctly
-    async with real_db_factory() as verify_db:
-        messages = await message_repo.list_for_session(verify_db, session.id)
-        assert len(messages) == 1
-        assert messages[0].content == accumulated_content
-```
-
-### Fixture Setup for Real Database Tests
-
-```python
-# conftest.py
-import pytest
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-
-@pytest.fixture(scope="session")
-async def test_db_engine():
-    """Create test database engine (session scope)."""
-    engine = create_async_engine(
-        "postgresql+asyncpg://test:test@localhost/test_db",
-        echo=False
-    )
-
-    # Create tables
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    yield engine
-
-    # Cleanup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-
-    await engine.dispose()
-
-@pytest.fixture
-async def real_db_factory(test_db_engine):
-    """Factory for creating fresh database sessions."""
-    session_factory = async_sessionmaker(
-        bind=test_db_engine,
-        expire_on_commit=False
-    )
-
-    def factory():
-        return session_factory()
-
-    return factory
-```
-
-### When to Write Integration Tests
-
-| Scenario | Requires Integration Test | Reason |
-|----------|---------------------------|--------|
-| **Fresh session created** | ✅ Yes | Cross-session entity usage bugs |
-| **RLS context setting** | ✅ Yes | Verify tenant isolation works |
-| **Streaming endpoints** | ✅ Yes | Session lifecycle complexity |
-| **Background tasks** | ✅ Yes | Different process/session context |
-| **Simple CRUD** | ⚠️ Optional | Unit tests may be sufficient |
-| **Pure business logic** | ❌ No | No database session complexity |
-
-### Test Markers
-
-```python
-# pytest.ini or pyproject.toml
-[tool.pytest.ini_options]
-markers = [
-    "unit: Fast isolated tests with mocks",
-    "integration: Tests with real database/external services",
-    "e2e: Full end-to-end workflow tests"
-]
-```
-
-Run subsets:
-
-```bash
-# Fast unit tests only (CI on every commit)
-pytest -m unit
-
-# Integration tests (CI before merge)
-pytest -m integration
-
-# Full suite (nightly or pre-release)
-pytest
-```
-
-### Detection Heuristic
-
-**If your code:**
-- Creates a fresh `async with session_factory() as db:` block
-- Passes entities between sessions
-- Sets RLS context manually
-- Handles WebSocket/SSE/streaming with DB persistence
-
-**Then you MUST:**
-- Write an integration test with real database
-- Test the complete session lifecycle
-- Verify entities are reloaded correctly
-- Confirm tenant context is set properly
-
-**Prevention:** Integration tests are non-negotiable for preventing production `MissingGreenlet` errors and RLS bypass vulnerabilities.

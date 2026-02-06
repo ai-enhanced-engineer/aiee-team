@@ -69,4 +69,25 @@ Entrypoints → Service Layer → Domain Model
 | Transaction management | Unit of Work |
 | Complex invariants | Aggregates |
 
+## Multi-Service Architecture
+
+### Service Placement Decision Framework
+
+When deciding where to place new features, domain ownership typically outweighs infrastructure convenience.
+
+**Decision criteria (priority order):**
+1. **Domain Ownership** - Which service owns the business capability?
+2. **Data Ownership** - Which service owns the authoritative data?
+3. **Infrastructure Reuse** - Which service has needed infrastructure already?
+4. **Deployment Coupling** - Which choice minimizes cross-service deployments?
+
+**Example:**
+| Option | Domain | Data | Infrastructure | Decision |
+|--------|--------|------|----------------|----------|
+| gateway-service | ❌ (real-time) | ❌ | ✅ (has DB) | Reject |
+| migrations-service | ❌ (schemas) | ❌ | ✅ (has batch) | Reject |
+| analytics-service | ✅ (analytics) | ✅ (owns data) | ❌ (needs new) | **Accept** |
+
+**Trade-off:** Infrastructure setup is one-time cost; wrong service boundaries compound over time.
+
 See `reference.md` for detailed explanations and `examples.md` for implementations.

@@ -56,6 +56,44 @@ def process(items: list[dict[str, Any]]) -> dict[str, int] | None:
 - Context managers for resources
 - Proper logging with structlog
 
+### Pydantic Settings Validation
+
+Validator timing determines when validation executes:
+
+| Decorator | Timing | Use Case |
+|-----------|--------|----------|
+| `@property` | Lazy (on access) | Computed values |
+| `@field_validator` | Per-field (during parse) | Single-field rules |
+| `@model_validator` | Initialization (after parse) | Cross-field security controls |
+
+Security controls typically use `@model_validator` to fail fast:
+
+```python
+from pydantic import model_validator
+
+class Settings(BaseSettings):
+    environment: str = "development"
+    auth_database_url: str | None = None
+
+    @model_validator(mode="after")
+    def validate_production_requirements(self) -> "Settings":
+        if self.environment == "production" and not self.auth_database_url:
+            raise ValueError("AUTH_DATABASE_URL required in production")
+        return self
+```
+
+### Pydantic Value Object Comparison
+
+When comparing Pydantic models or value objects, use `str()` on both sides:
+
+```python
+# WRONG - type mismatch causes silent failures
+session.visitor_id.value != visitor_id
+
+# RIGHT - explicit string conversion
+str(session.visitor_id) != str(visitor_id)
+```
+
 ## Anti-Patterns to Avoid
 
 | Bad | Good |
@@ -67,5 +105,6 @@ def process(items: list[dict[str, Any]]) -> dict[str, int] | None:
 | `List[str]` | `list[str]` |
 | `Optional[X]` | `X \| None` |
 | Mutable default args | `field(default_factory=list)` |
+| `time.time()` for elapsed | `time.perf_counter()` |
 
 See `reference.md` for detailed patterns and `examples.md` for code samples.

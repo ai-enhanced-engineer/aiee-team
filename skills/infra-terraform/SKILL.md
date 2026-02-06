@@ -143,4 +143,4 @@ repos:
 4. **Tag module versions** - `?ref=v1.2.3`
 5. **Plan in CI** - Detect drift early
 
-See `reference.md` for detailed patterns and `examples.md` for CI/CD templates.
+See `reference.md` for detailed patterns and `examples.md` for a complete module example.

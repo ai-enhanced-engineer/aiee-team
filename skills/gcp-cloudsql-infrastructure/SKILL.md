@@ -62,5 +62,5 @@ Infrastructure-level patterns for Google Cloud SQL PostgreSQL provisioning and o
 | Prod (small) | db-standard-1 | 50GB SSD | REGIONAL | ~$110 |
 | Prod (medium) | db-standard-2 | 100GB SSD | REGIONAL | ~$200 |
 
-See `reference.md` for sizing calculations, VPC networking, and Terraform patterns.
-See `examples.md` for complete Terraform configurations.
+See `reference.md` for sizing calculations, VPC networking, and performance tuning.
+See `examples.md` for complete Terraform module and tier upgrade configurations.
