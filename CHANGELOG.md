@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.3.0...v1.3.1) (2026-02-06)
+
+
+### Bug Fixes
+
+* remove misleading capability claims from agent definitions ([#9](https://github.com/ai-enhanced-engineer/aiee-team/issues/9)) ([9dc16fb](https://github.com/ai-enhanced-engineer/aiee-team/commit/9dc16fbfb29122a172a0623f7a73431d0bc66a59))
+
 # [1.3.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.2.0...v1.3.0) (2026-02-01)
 
 
