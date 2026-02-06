@@ -241,29 +241,25 @@ See `commands/aiee-frontend.md` for detailed workflow documentation.
 
 ## 🛠️ Skills
 
-This plugin includes **12 skills** organized by access tier:
-
-### Complete Skills (Full Documentation)
-
-| Skill | Purpose |
-|-------|---------|
-| `dev-standards` | Development standards for code style, git conventions, and validation |
-| `unit-test-standards` | Test naming conventions, coverage requirements, and behavioral testing |
-
-### Lite Skills (Concepts Only)
+This plugin includes **15 skills** that provide domain knowledge to agents:
 
 | Skill | Purpose |
 |-------|---------|
 | `arch-ddd` | Domain-Driven Design patterns and concepts |
-| `arch-events` | Event-driven architecture patterns |
 | `arch-decision-records` | Architecture Decision Records (ADRs) |
 | `arch-diagrams` | System visualization and diagrams |
+| `arch-events` | Event-driven architecture patterns |
 | `arch-mvp-roadmap` | MVP definition and phased delivery |
 | `arch-python-modern` | Modern Python 3.10+ development standards |
 | `compliance-frameworks` | SOC 2, GDPR compliance concepts |
+| `dev-standards` | Development standards for code style, git conventions, and validation |
 | `frontend-accessibility` | WCAG accessibility concepts |
+| `frontend-angular` | Angular 21+ signals, standalone components, and zoneless patterns |
+| `frontend-angular-ai` | AI integration for Angular with Genkit, Firebase AI Logic, Gemini API |
 | `gcp-cloudsql-infrastructure` | Cloud SQL PostgreSQL infrastructure concepts |
 | `infra-terraform` | Infrastructure as Code concepts |
+| `testing-angular` | Angular testing with Vitest, signal testing, and Playwright E2E |
+| `unit-test-standards` | Test naming conventions, coverage requirements, and behavioral testing |
 
 ---
 
@@ -289,19 +285,14 @@ aiee-team/
 
 ## 🤝 Contributing
 
-We welcome contributions that improve the team's capabilities:
+We welcome contributions that improve the team's capabilities.
 
-**To add a new agent:**
+| I want to... | Guide |
+|--------------|-------|
+| Add or modify an **agent** | See [`agents/README.md`](agents/README.md) |
+| Add or modify a **skill** | See [`skills/README.md`](skills/README.md) |
 
-1. Create `agents/<agent-name>.md` following the existing format
-2. Update this README's Team Members table
-3. Submit a pull request
-
-**To add a new skill:**
-
-1. Create `skills/<skill-name>.md` following the skill format
-2. Update this README's Skills table
-3. Submit a pull request
+After changes, update the tables in this README to keep the overview current.
 
 ---
 
