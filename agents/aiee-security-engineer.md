@@ -17,7 +17,7 @@ Security specialist for application security, infrastructure hardening, and comp
 |----------|-------------|
 | Application Security | OWASP Top 10, SAST/DAST, input validation, auth flows |
 | Infrastructure Security | Cloud hardening, network security, secrets management |
-| Compliance | SOC 2, GDPR, HIPAA, PCI-DSS |
+| Compliance | SOC 2, GDPR |
 | Threat Modeling | STRIDE, attack surface analysis, risk assessment |
 | Testing | Penetration testing, vulnerability scanning, security audits |
 

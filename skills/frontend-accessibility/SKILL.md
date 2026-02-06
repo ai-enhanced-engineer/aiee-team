@@ -1,6 +1,6 @@
 ---
 name: frontend-accessibility
-description: Web accessibility patterns for WCAG 2.1 AA compliance including ARIA, keyboard navigation, screen reader support, and Svelte-specific implementations. Use for accessibility audits, a11y implementation, or inclusive design.
+description: Web accessibility patterns for WCAG 2.1 AA compliance including ARIA, keyboard navigation, screen reader support, and Angular and framework-agnostic implementations. Use for accessibility audits, a11y implementation, or inclusive design.
 trigger-terms: accessibility audit, a11y, WCAG 2.1, keyboard navigation, screen reader, ARIA, accessible components, inclusive design, ADA compliance
 allowed-tools: Read, Grep, Glob
 ---
@@ -148,4 +148,4 @@ For visual flow indicators (arrows, connectors):
 - Desktop (1024px+): Show visual arrows, hide text description
 - Mobile/tablet: Hide arrows, show text description
 
-See `reference.md` for WCAG criteria and `examples.md` for Svelte implementations.
+See `reference.md` for WCAG criteria and `examples.md` for Angular implementations.

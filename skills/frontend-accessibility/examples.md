@@ -1,283 +1,258 @@
 # Frontend Accessibility Examples
 
-Svelte 5 accessible component patterns.
+Angular 21+ accessible component patterns.
 
 ## Accessible Button
 
-```svelte
-<script lang="ts">
-  interface Props {
-    onclick: () => void;
-    disabled?: boolean;
-    loading?: boolean;
-    label: string;
-    children: any;
-  }
+```typescript
+import { Component, input, output } from '@angular/core';
 
-  let { onclick, disabled = false, loading = false, label, children }: Props = $props();
-</script>
-
-<button
-  {onclick}
-  disabled={disabled || loading}
-  aria-label={label}
-  aria-busy={loading}
-  aria-disabled={disabled}
->
-  {#if loading}
-    <span class="sr-only">Loading...</span>
-    <span aria-hidden="true" class="spinner"></span>
-  {:else}
-    {@render children()}
-  {/if}
-</button>
-
-<style>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+@Component({
+  selector: 'app-accessible-button',
+  standalone: true,
+  template: `
+    <button
+      (click)="clicked.emit()"
+      [disabled]="disabled() || loading()"
+      [attr.aria-label]="label()"
+      [attr.aria-busy]="loading()"
+      [attr.aria-disabled]="disabled()">
+      @if (loading()) {
+        <span class="sr-only">Loading...</span>
+        <span aria-hidden="true" class="spinner"></span>
+      } @else {
+        <ng-content />
+      }
+    </button>
+  `,
+  styles: [`
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  `]
+})
+export class AccessibleButtonComponent {
+  label = input.required<string>();
+  disabled = input(false);
+  loading = input(false);
+  clicked = output<void>();
+}
 ```
 
 ## Accessible Modal
 
-```svelte
-<script lang="ts">
-  import { tick } from 'svelte';
+```typescript
+import { Component, input, output, effect, viewChild, ElementRef, signal } from '@angular/core';
 
-  interface Props {
-    open: boolean;
-    title: string;
-    onclose: () => void;
-    children: any;
-  }
-
-  let { open = $bindable(false), title, onclose, children }: Props = $props();
-
-  let dialogRef: HTMLDialogElement;
-  let previouslyFocused: HTMLElement | null = null;
-
-  $effect(() => {
-    if (open) {
-      previouslyFocused = document.activeElement as HTMLElement;
-      dialogRef?.showModal();
-    } else {
-      dialogRef?.close();
-      previouslyFocused?.focus();
+@Component({
+  selector: 'app-accessible-modal',
+  standalone: true,
+  template: `
+    <dialog
+      #dialogRef
+      (keydown.escape)="handleEscape($event)"
+      (click)="handleBackdropClick($event)"
+      aria-labelledby="dialog-title"
+      aria-modal="true">
+      <header>
+        <h2 id="dialog-title">{{ title() }}</h2>
+        <button
+          (click)="closed.emit()"
+          aria-label="Close dialog"
+          class="close-btn">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+      <div class="content">
+        <ng-content />
+      </div>
+    </dialog>
+  `,
+  styles: [`
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.5);
     }
-  });
+    dialog {
+      border: none;
+      border-radius: 8px;
+      padding: 0;
+      max-width: 500px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+    .close-btn:focus-visible {
+      outline: 2px solid #007bff;
+      outline-offset: 2px;
+    }
+  `]
+})
+export class AccessibleModalComponent {
+  title = input.required<string>();
+  open = input(false);
+  closed = output<void>();
 
-  function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      onclose();
+  private dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialogRef');
+  private previouslyFocused: HTMLElement | null = null;
+
+  constructor() {
+    effect(() => {
+      const dialog = this.dialogRef().nativeElement;
+      if (this.open()) {
+        this.previouslyFocused = document.activeElement as HTMLElement;
+        dialog.showModal();
+      } else {
+        dialog.close();
+        this.previouslyFocused?.focus();
+      }
+    });
+  }
+
+  handleEscape(e: KeyboardEvent): void {
+    e.preventDefault();
+    this.closed.emit();
+  }
+
+  handleBackdropClick(e: MouseEvent): void {
+    if (e.target === this.dialogRef().nativeElement) {
+      this.closed.emit();
     }
   }
-
-  function handleBackdropClick(e: MouseEvent) {
-    if (e.target === dialogRef) {
-      onclose();
-    }
-  }
-</script>
-
-<dialog
-  bind:this={dialogRef}
-  onkeydown={handleKeydown}
-  onclick={handleBackdropClick}
-  aria-labelledby="dialog-title"
-  aria-modal="true"
->
-  <header>
-    <h2 id="dialog-title">{title}</h2>
-    <button
-      onclick={onclose}
-      aria-label="Close dialog"
-      class="close-btn"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </header>
-  <div class="content">
-    {@render children()}
-  </div>
-</dialog>
-
-<style>
-  dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  dialog {
-    border: none;
-    border-radius: 8px;
-    padding: 0;
-    max-width: 500px;
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.25rem;
-  }
-
-  .close-btn:focus-visible {
-    outline: 2px solid #007bff;
-    outline-offset: 2px;
-  }
-</style>
+}
 ```
 
 ## Accessible Form Input
 
-```svelte
-<script lang="ts">
-  interface Props {
-    id: string;
-    label: string;
-    type?: string;
-    value: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-  }
+```typescript
+import { Component, input, computed, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-  let {
-    id,
-    label,
-    type = 'text',
-    value = $bindable(''),
-    error,
-    hint,
-    required = false
-  }: Props = $props();
+@Component({
+  selector: 'app-accessible-input',
+  standalone: true,
+  imports: [FormsModule],
+  template: `
+    <div class="field" [class.has-error]="error()">
+      <label [for]="id()">
+        {{ label() }}
+        @if (required()) {
+          <span aria-hidden="true" class="required">*</span>
+          <span class="sr-only">(required)</span>
+        }
+      </label>
 
-  let describedBy = $derived(
-    [error ? `${id}-error` : null, hint ? `${id}-hint` : null]
-      .filter(Boolean)
-      .join(' ') || undefined
-  );
-</script>
+      <input
+        [id]="id()"
+        [type]="type()"
+        [(ngModel)]="value"
+        [required]="required()"
+        [attr.aria-invalid]="error() ? 'true' : null"
+        [attr.aria-describedby]="describedBy()" />
 
-<div class="field" class:has-error={error}>
-  <label for={id}>
-    {label}
-    {#if required}
-      <span aria-hidden="true" class="required">*</span>
-      <span class="sr-only">(required)</span>
-    {/if}
-  </label>
+      @if (hint() && !error()) {
+        <span [id]="id() + '-hint'" class="hint">{{ hint() }}</span>
+      }
 
-  <input
-    {id}
-    {type}
-    bind:value
-    {required}
-    aria-invalid={error ? 'true' : undefined}
-    aria-describedby={describedBy}
-  />
+      @if (error()) {
+        <span [id]="id() + '-error'" class="error" role="alert">
+          {{ error() }}
+        </span>
+      }
+    </div>
+  `,
+  styles: [`
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .required { color: #dc3545; }
+    .has-error input { border-color: #dc3545; }
+    .error { color: #dc3545; font-size: 0.875rem; }
+    .hint { color: #6c757d; font-size: 0.875rem; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  `]
+})
+export class AccessibleInputComponent {
+  id = input.required<string>();
+  label = input.required<string>();
+  type = input('text');
+  value = model('');
+  error = input<string>();
+  hint = input<string>();
+  required = input(false);
 
-  {#if hint && !error}
-    <span id="{id}-hint" class="hint">{hint}</span>
-  {/if}
-
-  {#if error}
-    <span id="{id}-error" class="error" role="alert">
-      {error}
-    </span>
-  {/if}
-</div>
-
-<style>
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .required {
-    color: #dc3545;
-  }
-
-  .has-error input {
-    border-color: #dc3545;
-  }
-
-  .error {
-    color: #dc3545;
-    font-size: 0.875rem;
-  }
-
-  .hint {
-    color: #6c757d;
-    font-size: 0.875rem;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+  describedBy = computed(() => {
+    const parts: string[] = [];
+    if (this.error()) parts.push(`${this.id()}-error`);
+    if (this.hint()) parts.push(`${this.id()}-hint`);
+    return parts.length > 0 ? parts.join(' ') : null;
+  });
+}
 ```
 
 ## Skip Link
 
-```svelte
-<script lang="ts">
-  // Skip link allows keyboard users to jump directly to main content
-  interface Props {
-    targetId: string;
-    label?: string;
-  }
+```typescript
+import { Component, input } from '@angular/core';
 
-  let { targetId, label = 'Skip to main content' }: Props = $props();
-</script>
-
-<a href="#{targetId}" class="skip-link">
-  {label}
-</a>
-
-<style>
-  .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    padding: 0.5rem 1rem;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    z-index: 100;
-  }
-
-  .skip-link:focus {
-    top: 0;
-  }
-</style>
+@Component({
+  selector: 'app-skip-link',
+  standalone: true,
+  template: `
+    <a [href]="'#' + targetId()" class="skip-link">
+      {{ label() }}
+    </a>
+  `,
+  styles: [`
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+  `]
+})
+export class SkipLinkComponent {
+  targetId = input.required<string>();
+  label = input('Skip to main content');
+}
 ```
 
 ## Focus Trap Utility

@@ -1,7 +1,7 @@
 ---
 description: AIEE frontend services - implementation + 2-phase gated review
 argument-hint: <fix:|feat:|refactor:> [task description]
-tags: [frontend, quality-gate, svelte, angular, accessibility, security, web-components]
+tags: [frontend, quality-gate, angular, accessibility, security, web-components]
 requires-plugins: []
 min-claude-code-version: 1.0.33
 examples:
@@ -12,7 +12,7 @@ examples:
 
 # AIEE Frontend Cycle
 
-Frontend implementation with two-phase gated review for Svelte 5 + Web Components and Angular 21+ projects.
+Frontend implementation with two-phase gated review for Angular 21+ and Web Components projects.
 
 ## Target Projects
 
@@ -20,8 +20,8 @@ Supports modern frontend frameworks:
 
 | Framework | Key Characteristics |
 |-----------|---------------------|
-| Svelte 5 + Web Components | Runes, Shadow DOM, reactive stores, Playwright E2E |
 | Angular 21+ | Signals, standalone components, zoneless change detection, Vitest |
+| Web Components | Shadow DOM, custom elements, framework-agnostic embedding |
 
 ## Context
 
@@ -54,8 +54,8 @@ Summon **@agent-aiee-frontend-engineer** to implement the changes.
 
 **Framework-specific guidance:**
 
-- **Svelte 5:** Use runes ($state, $derived, $effect), proper reactivity patterns, Shadow DOM considerations
-- **Angular 21:** Use signals, standalone components, zoneless change detection, modern control flow (@if, @for)
+- **Angular 21+:** Use signals, standalone components, zoneless change detection, modern control flow (@if, @for)
+- **Web Components:** Shadow DOM considerations, custom element lifecycle, framework-agnostic patterns
 
 Wait for completion before proceeding to Phase 2.
 
@@ -78,8 +78,7 @@ Both complete independently, then orchestrator proceeds to Phase 3
 
 1. **@agent-aiee-frontend-engineer** (Frontend Architecture, Patterns & Accessibility)
    - Focus: Framework patterns, component architecture, state management, accessibility
-   - Review for Svelte 5: Runes, reactivity, component composition, store patterns
-   - Review for Angular 21: Signals, standalone components, zoneless patterns, modern control flow
+   - Review for Angular 21+: Signals, standalone components, zoneless patterns, modern control flow
    - Accessibility: ARIA attributes, keyboard navigation, screen reader support, focus management
    - Visual: Responsive design, cross-browser compatibility, user flows
    - **fix:** Is the fix idiomatic? Accessible? Any visual regression?
@@ -90,8 +89,8 @@ Both complete independently, then orchestrator proceeds to Phase 3
 2. **@agent-aiee-security-engineer** (Security & Compliance)
    - Focus: Frontend security, auth flows, compliance (SOC 2, GDPR)
    - Review: XSS prevention, CSRF protection, secure cookie handling, token refresh
-   - Svelte-specific: Shadow DOM security boundaries, script injection prevention
    - Angular-specific: Sanitization, template security, HTTP interceptor patterns
+   - Web Components: Shadow DOM security boundaries, script injection prevention
    - **fix:** Does fix close the vulnerability completely?
    - **feat:** What's the attack surface of new functionality?
    - **refactor:** No security regression from restructure?
