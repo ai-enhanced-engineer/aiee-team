@@ -85,4 +85,67 @@ For custom interactive components (tabs, accordions, selectors, toggles):
 - [ ] **Visual states** - Clear focus/selected/disabled indicators
 - [ ] **Focus management** - Logical flow, no focus traps
 
+## Progressive Disclosure with Native HTML
+
+Use native `<details>` elements instead of custom JavaScript accordions:
+
+```html
+<details class="expandable-section">
+  <summary>
+    <h3>Section Title</h3>
+    <span class="chevron" aria-hidden="true">▼</span>
+  </summary>
+  <div class="expanded-content">
+    <!-- Content here -->
+  </div>
+</details>
+```
+
+```css
+details summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+details summary:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+```
+
+**Benefits:**
+- Built-in keyboard navigation (Tab, Enter/Space to toggle)
+- Screen readers announce "collapsed/expanded" state automatically
+- Works without JavaScript
+- Less code to maintain
+
+**When to use:** FAQs, expandable cards, skill lists, workflow phases, any progressive disclosure pattern
+
+## Decorative Elements with Text Alternatives
+
+For visual flow indicators (arrows, connectors):
+
+```html
+<!-- Visual arrows (hidden from screen readers) -->
+<div class="flow-arrow" aria-hidden="true">...</div>
+
+<!-- Text alternative for screen readers and mobile -->
+<p class="flow-description">
+  After Phase 5, teams iterate back to Phase 1 (max 3 cycles).
+</p>
+```
+
+**Responsive strategy:**
+- Desktop (1024px+): Show visual arrows, hide text description
+- Mobile/tablet: Hide arrows, show text description
+
 See `reference.md` for WCAG criteria and `examples.md` for Svelte implementations.

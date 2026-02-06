@@ -1,6 +1,6 @@
 ---
 name: dev-standards
-description: Development standards for Python projects including code style, git conventions, testing patterns, and validation requirements. Use when writing code, reviewing PRs, or making commits. Loaded by all implementation agents.
+description: Development standards for Python projects including code style, git conventions, testing patterns, timing measurement, and validation requirements. Use when writing code, reviewing PRs, or making commits. Loaded by all implementation agents.
 allowed-tools: Read, Grep, Glob
 ---
 
@@ -51,4 +51,4 @@ Additional requirements:
 - Do not add claude signatures to commits and PRs
 - Do not commit until confirmed by user
 
-See `reference.md` for Git guidelines, test naming conventions, and validation requirements.
+See `reference.md` for Git guidelines, test naming conventions, timing measurement patterns (`perf_counter()` vs `time()`), and validation requirements.
