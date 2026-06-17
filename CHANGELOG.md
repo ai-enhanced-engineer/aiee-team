@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.4.0...v1.5.0) (2026-06-17)
+
+
+### Features
+
+* add npx installer with technology-grouped install ([#11](https://github.com/ai-enhanced-engineer/aiee-team/issues/11)) ([83fcb25](https://github.com/ai-enhanced-engineer/aiee-team/commit/83fcb25221d7c4d095445b3129dc8ca5d303c5ed)), closes [1a8888-#4db8d8](https://github.com/1a8888-/issues/4db8d8) [#0a0f14](https://github.com/ai-enhanced-engineer/aiee-team/issues/0a0f14)
+
 # [1.4.0](https://github.com/ai-enhanced-engineer/aiee-team/compare/v1.3.1...v1.4.0) (2026-06-16)
 
 
