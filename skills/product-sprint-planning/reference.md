@@ -783,7 +783,7 @@ After Phase 3.5, integrate ALL validation phases into a single comprehensive tic
 ### Standard Ticket Structure
 
 1. **Overview** (Phase 2: Product) - Problem statement, user story
-2. **Product Validation** - Sarah Test, zero-code compliance, tier classification
+2. **Product Validation** - target-user usability check, compliance constraints, tier classification
 3. **Technical Validation** (Phase 3) - Feasibility, service routing, dependencies
 4. **Project Validation Findings** (Phase 3.5) - Codebase deep dive results
 5. **Effort Revision Table** - Phase 3 vs Phase 3.5 (if different)
