@@ -71,6 +71,46 @@ This plugin gives you specialist agents with that knowledge built in.
    ```
    You should see AIEE agents listed.
 
+### Via npx (no marketplace)
+
+Copy the agents, skills, and commands straight into a `.claude` directory — handy when you can't use the plugin marketplace or want them in a single project:
+
+```shell
+# Into the current project's ./.claude
+npx aiee-team install
+
+# Into ~/.claude for every project
+npx aiee-team install --global
+```
+
+**Install only what you need.** The pack is grouped by technology — install a subset, and each group brings its **specialist agent(s) plus skills**. The `dev-practices` group is shared by every agent, so it's always included as core. A full install (no `--groups`) gets all 11 agents and 102 skills.
+
+```shell
+npx aiee-team --list-groups                              # see groups, skill + agent counts
+npx aiee-team install --groups=frontend-web,backend-api  # install just those
+```
+
+| Group | Skills | Agents | Covers |
+|-------|:--:|:--:|--------|
+| `frontend-web` | 25 | aiee-frontend-engineer | React / Angular / Svelte / Next.js, CSS, forms, web a11y |
+| `mobile` | 20 | aiee-mobile-engineer, aiee-ios-engineer | React Native / Expo, iOS / Swift / SwiftUI, watchOS |
+| `backend-api` | 20 | aiee-backend-engineer, aiee-data-engineer | FastAPI / NestJS / Laravel, databases, ORMs, auth |
+| `cloud-infra` | 17 | aiee-devops / sre / observability / security-engineer | GCP / AWS / Azure, Terraform, CI/CD, observability |
+| `architecture` | 7 | aiee-systems-architect | DDD, ADRs, diagrams, events, MVP roadmap, compliance |
+| `python-core` | 5 | aiee-python-expert-engineer | Modern Python, Poetry, Docker, ruff |
+| `dev-practices` | 4 | _(core — always installed)_ | Standards, debugging, performance, test standards |
+| `ai-ml` | 4 | _(skills only)_ | Vision/video, on-device Apple AI, LangChain + Azure OpenAI |
+
+Other commands: `npx aiee-team install --dry-run` (preview), `--force` (overwrite existing), `npx aiee-team uninstall` (remove what was installed), `npx aiee-team --help`.
+
+This also works directly from GitHub before any npm publish:
+
+```shell
+npx github:ai-enhanced-engineer/aiee-team install
+```
+
+After installing, restart Claude Code (or run `/agents`) to pick up the new specialists.
+
 ### Via Local Development
 
 For contributors or local testing:
@@ -361,14 +401,19 @@ aiee-team/
 ├── .claude-plugin/
 │   ├── plugin.json       # Plugin metadata
 │   └── marketplace.json  # Marketplace distribution
-├── agents/               # Agent definitions
+├── agents/               # Agent definitions (11 specialists)
 ├── assets/
 │   └── images/           # Cover image and visuals
+├── bin/
+│   └── install.js        # npx installer (npx aiee-team install)
 ├── commands/             # Team-specific slash commands
-├── skills/               # Team-specific skills
+├── skills/               # Team-specific skills (102)
 ├── workflows/            # Team-specific workflows
 ├── scripts/
 │   └── setup.sh          # Local development helper
+├── groups.json           # Skill + agent → install-group taxonomy
+├── justfile              # Dev tasks (just validate, just skills, ...)
+├── package.json          # npm package (bin + files for npx)
 └── README.md
 ```
 
@@ -383,7 +428,7 @@ We welcome contributions that improve the team's capabilities.
 | Add or modify an **agent** | See [`agents/README.md`](agents/README.md) |
 | Add or modify a **skill** | See [`skills/README.md`](skills/README.md) |
 
-After changes, update the tables in this README to keep the overview current.
+After changes, update the tables in this README **and** the install-group mapping in [`groups.json`](groups.json) so new agents/skills are reachable via `npx aiee-team install --groups=...`. Run `npx aiee-team --list-groups` to confirm nothing is left ungrouped.
 
 ---
 

@@ -23,6 +23,7 @@ description: >-                      # Required — one-line summary with "Call 
   DDD patterns, async programming, or service layer decisions.
 model: sonnet                        # Optional — model preference (sonnet, opus, haiku)
 color: green                         # Optional — display color in agent listings
+tools: Read, Grep, Glob, Bash        # Optional — tool allowlist; omit to grant all tools
 skills: arch-ddd, arch-events, dev-standards  # Optional — comma-separated skill names
 ---
 ```
@@ -33,6 +34,7 @@ skills: arch-ddd, arch-events, dev-standards  # Optional — comma-separated ski
 | `description` | Yes | Include "Call for..." to help the orchestrator route tasks |
 | `model` | No | Defaults to the orchestrator's model if omitted |
 | `color` | No | Visual hint in CLI agent listings |
+| `tools` | No | Comma-separated tool allowlist; omit to grant all tools |
 | `skills` | No | Comma-separated list of skill directory names |
 
 ## Adding a New Agent
@@ -43,8 +45,9 @@ skills: arch-ddd, arch-events, dev-standards  # Optional — comma-separated ski
    - **Expertise Scope** — Technologies and patterns the agent knows
    - **When to Call** — Specific scenarios where this agent adds value
    - **NOT For** — Out-of-scope tasks (helps the orchestrator avoid misrouting)
-4. **Update main README** — Add a row to the Team Members table
-5. **Submit a pull request**
+4. **Assign it to a group** — Add the agent to the matching group's `agents` list in [`groups.json`](../groups.json) so it installs with `npx aiee-team install --groups=<group>`. An agent not in any group is only included in a full install.
+5. **Update main README** — Add a row to the Team Members table
+6. **Submit a pull request**
 
 ## Conventions
 
@@ -52,3 +55,4 @@ skills: arch-ddd, arch-events, dev-standards  # Optional — comma-separated ski
 - **Description** — Include "Call for..." to guide automatic routing
 - **NOT For section** — Explicitly list what the agent should not handle
 - **Skills** — Only reference skills that exist in `skills/`. Verify names match directory names
+- **Grouping** — Each agent belongs to exactly one group in `groups.json`; installing that group installs the agent alongside its skills
