@@ -3,6 +3,10 @@
 <p align="center">Specialist agents, skills, and commands for Claude Code.</p>
 
 <p align="center">
+  <img src="assets/images/header.png" alt="AIEE — Engineering precision in the age of slop" width="100%" />
+</p>
+
+<p align="center">
   <a href="https://github.com/ai-enhanced-engineer/aiee-skills/releases"><img src="https://img.shields.io/github/v/release/ai-enhanced-engineer/aiee-skills" alt="Version" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" /></a>
   <a href="https://github.com/ai-enhanced-engineer/aiee-skills/actions"><img src="https://img.shields.io/github/actions/workflow/status/ai-enhanced-engineer/aiee-skills/release.yml?branch=main" alt="Build Status" /></a>
